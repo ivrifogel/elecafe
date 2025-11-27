@@ -3,28 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ele Cafe | Luxury Teas & Coffee Vancouver</title>
-    <meta name="description" content="Vancouver's top café for luxury teas, freshly brewed coffee, and artisanal pastries. Located at 895 West Broadway.">
-    <meta name="theme-color" content="#8A7045">
-    
-    <!-- Fonts: Playfair Display (Headings) and Lato (Body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <title>Pistachio Sweetery Cafe | Vancouver</title>
     <style>
+        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary-color: #8A7045; /* Brand Gold/Bronze */
-            --secondary-color: #2c2c2c; /* Dark Grey */
-            --bg-color: #F9F7F2; /* Cream/Paper White */
-            --card-bg: #ffffff;
-            --text-color: #4a4a4a;
-            --accent-light: #eaddcf;
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Lato', sans-serif;
+            --primary-color: #93C572; /* Pistachio Green */
+            --primary-dark: #558b2f;
+            --secondary-color: #3e2723; /* Coffee Brown */
+            --bg-color: #fafafa;
+            --text-color: #333;
+            --light-text: #666;
+            --white: #ffffff;
+            --accent: #d4e157;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-serif: 'Georgia', serif;
         }
 
         * {
@@ -33,586 +25,411 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font-body);
+            font-family: var(--font-main);
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
-        button { cursor: pointer; }
 
-        /* --- TYPOGRAPHY --- */
-        h1, h2, h3, h4 {
-            font-family: var(--font-heading);
-            color: var(--secondary-color);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .section-subtitle {
-            text-align: center;
-            max-width: 600px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            font-style: italic;
-            color: #777;
-            font-size: 1.1rem;
+            padding: 0 20px;
         }
 
-        /* --- NAVIGATION --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 5%;
-            background: rgba(249, 247, 242, 0.98);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(138, 112, 69, 0.2);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: 70px;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            height: 60px; /* Container height for logo */
-        }
-
-        .nav-logo-img {
-            max-height: 100%;
-            width: auto;
-            object-fit: contain;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            font-family: var(--font-serif);
+            letter-spacing: 1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
-            align-items: center;
+            gap: 20px;
         }
 
         .nav-links a {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            color: var(--secondary-color);
-            position: relative;
+            font-weight: 500;
+            transition: color 0.3s;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-order {
             background-color: var(--primary-color);
-            transition: width 0.3s;
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a:hover { color: var(--primary-color); }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--secondary-color);
+        .btn-order:hover {
+            background-color: var(--primary-dark);
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            height: 85vh;
-            /* New Premium Loose Leaf Tea Image */
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?q=80&w=2670&auto=format&fit=crop'); 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
-            background-attachment: scroll; /* Changed to scroll for better mobile performance on high-res images */
+            height: 60vh;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            align-items: center;
             text-align: center;
-            color: white;
-            padding: 0 20px;
+            color: var(--white);
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-            font-style: normal; /* Removed italics per request */
-            font-weight: 700;
-            letter-spacing: 1px;
-            line-height: 1.1;
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-family: var(--font-serif);
         }
 
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 3rem;
-            max-width: 700px;
-            font-weight: 400;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-            letter-spacing: 0.5px;
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .btn {
-            padding: 16px 40px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50px; /* Rounded Buttons */
-            font-family: var(--font-body);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn:hover { 
-            background-color: #6d5836; 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* --- SIGNATURES --- */
-        .signatures {
-            padding: 6rem 5%;
-            background: #fff;
-            text-align: center;
-        }
-
-        .sig-grid {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-            flex-wrap: wrap;
-            margin-top: 3rem;
-        }
-
-        .sig-item {
-            background: var(--bg-color);
-            padding: 2.5rem 2rem;
-            border-radius: 12px;
-            width: 320px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-            transition: transform 0.3s;
-            border: 1px solid transparent;
-        }
-        
-        .sig-item:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-light);
-        }
-
-        .sig-icon {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .sig-item h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
-        .sig-item p { color: #666; font-size: 1rem; line-height: 1.6; }
-
-        /* --- TEA MENU GRID --- */
-        .menu-section {
-            padding: 7rem 5%;
-            background-color: var(--bg-color);
-        }
-
-        .tea-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .tea-card {
-            background: var(--card-bg);
-            border: 1px solid #f1f1f1;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-
-        .tea-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(138, 112, 69, 0.15);
-            border-color: rgba(138, 112, 69, 0.3);
-        }
-
-        .card-header {
-            padding: 1.8rem 2rem;
-            background-color: #fff;
-            border-bottom: 1px solid #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-header h3 {
-            font-size: 1.6rem;
-            color: var(--primary-color);
-            margin: 0;
-            letter-spacing: 0.5px;
-        }
-
-        .tea-list {
-            padding: 2rem;
-            max-height: 450px;
-            overflow-y: auto;
-        }
-        
-        /* Custom Scrollbar */
-        .tea-list::-webkit-scrollbar { width: 6px; }
-        .tea-list::-webkit-scrollbar-track { background: transparent; }
-        .tea-list::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 3px; }
-        .tea-list::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
-
-        .tea-list li {
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: #555;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #fafafa;
-            padding-bottom: 0.5rem;
-        }
-
-        .tea-list li:last-child { border-bottom: none; }
-
-        .tea-list li::before {
-            content: "•";
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin-right: 1rem;
-            line-height: 0;
-            position: relative;
-            top: 2px;
-        }
-
-        /* --- FOOTER / INFO --- */
-        .info-section {
+        /* --- INFO SECTION --- */
+        .info-bar {
             background-color: var(--secondary-color);
-            color: #bbb;
-            padding: 6rem 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 4rem;
+            color: var(--white);
+            padding: 40px 0;
+            text-align: center;
         }
 
-        .info-col h3 { 
-            color: #fff; 
-            margin-bottom: 1.5rem; 
-            font-size: 1.4rem;
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        /* --- MENU SECTION --- */
+        .menu-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--secondary-color);
+            font-family: var(--font-serif);
+        }
+
+        .menu-category {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
             border-bottom: 2px solid var(--primary-color);
             display: inline-block;
-            padding-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-        
-        .info-col p { margin-bottom: 1rem; line-height: 1.8; font-size: 0.95rem;}
-        .info-col ul li { 
-            margin-bottom: 1rem; 
-            border-bottom: 1px solid #444; 
-            padding-bottom: 1rem; 
-            display: flex; 
-            justify-content: space-between;
-            font-size: 0.95rem;
-        }
-        .info-col a { color: #fff; text-decoration: none; transition: 0.2s; opacity: 0.8;}
-        .info-col a:hover { color: var(--primary-color); opacity: 1; }
-
-        .footer-logo-img {
-            max-width: 150px;
-            margin-bottom: 1rem;
-            filter: brightness(0) invert(1); /* Makes the black logo white for the dark footer */
-            opacity: 0.9;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            color: var(--primary-dark);
         }
 
-        .social-icons {
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
             display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+
+        .item-price {
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #222;
+            color: #aaa;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
         
-        .social-icons a { color: #fff; transition: color 0.3s; }
-        .social-icons a:hover { color: var(--primary-color); }
-
-        .footer-bottom {
-            background: #1a1a1a;
-            color: #555;
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            border-top: 1px solid #333;
-        }
-
-        /* --- RESPONSIVE --- */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
-            .section-title { font-size: 2rem; }
-            .sig-item { width: 100%; }
-            .info-section { padding: 4rem 5%; }
-            .logo { height: 50px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Simplified for demo */
+            .logo { flex-grow: 1; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <div class="logo">
-            <img src="Black logo - no background.71185d48d11a3078fce8.png" alt="Ele Cafe" class="nav-logo-img">
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Pistachio Sweetery Cafe</div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#featured">Featured</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="https://www.ubereats.com/ca/store/pistachio-sweetery-cafe/JGWO1PIIVzK6tvjq0TwzpQ" target="_blank" class="btn-order">Order Online</a>
+            </nav>
         </div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#signatures">Signatures</a>
-            <a href="#menu">Tea Collection</a>
-            <a href="#location">Visit Us</a>
-        </div>
-        <button class="mobile-menu-btn">
-            <i data-lucide="menu"></i>
-        </button>
-    </nav>
-
-    <!-- HERO -->
-    <header id="home" class="hero">
-        <h1>Experience True Tea Culture</h1>
-        <p>Vancouver's premier destination for luxury loose leaf teas, artisanal pastries, and moments of calm.</p>
-        <a href="#menu"><button class="btn">View Our Menu</button></a>
     </header>
 
-    <!-- SIGNATURES -->
-    <section id="signatures" class="signatures">
-        <div class="section-header">
-            <h2 class="section-title">Must-Try Signatures</h2>
-            <p class="section-subtitle">Our baristas have crafted these unique beverages for the perfect indulgence.</p>
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Sweetness in Every Bite</h1>
+            <p>Mediterranean sweets, artisanal pastries, and specialty coffee in the heart of Vancouver.</p>
+            <a href="#menu" class="btn-order">View Menu</a>
         </div>
-        
-        <div class="sig-grid">
-            <div class="sig-item">
-                <div class="sig-icon"><i data-lucide="cup-soda" size="40"></i></div>
-                <h3>Tiramisu Latte</h3>
-                <p>A creamy, dessert-inspired indulgence combining rich espresso with delicate tiramisu flavors.</p>
-            </div>
-            <div class="sig-item">
-                <div class="sig-icon"><i data-lucide="leaf" size="40"></i></div>
-                <h3>Matchmisu Latte</h3>
-                <p>The perfect fusion of premium Japanese Matcha and classic Italian Tiramisu. Earthy and sweet.</p>
-            </div>
-            <div class="sig-item">
-                <div class="sig-icon"><i data-lucide="flame" size="40"></i></div>
-                <h3>Hojichamisu Latte</h3>
-                <p>Roasted green tea meets creamy foam. A comforting, nutty, and sophisticated treat.</p>
+    </section>
+
+    <section id="about" class="info-bar">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Location</h3>
+                    <p>686 Seymour St<br>Vancouver, BC V6B 3K4</p>
+                </div>
+                <div class="info-item">
+                    <h3>Hours</h3>
+                    <p>Every Day<br>8:00 a.m. - 11:30 p.m.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Contact</h3>
+                    <p>Visit us for dine-in<br>or order delivery online</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- TEA MENU -->
     <section id="menu" class="menu-section">
-        <div class="section-header">
-            <h2 class="section-title">Curated Tea Collection</h2>
-            <p class="section-subtitle">Sourced ethically from the finest tea gardens around the world.</p>
-        </div>
+        <div class="container">
+            <h2 class="section-title">Our Menu</h2>
 
-        <div class="tea-grid">
-            
-            <!-- Green Tea -->
-            <div class="tea-card">
-                <div class="card-header">
-                    <h3>Green Tea</h3>
-                    <i data-lucide="sprout" color="#8A7045"></i>
+            <div id="featured" class="menu-category">
+                <h3 class="category-title">Featured Favorites</h3>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Karak Tea</span>
+                            <span class="item-price">$7.85</span>
+                        </div>
+                        <p class="item-desc">#1 Most Liked Item. A rich, spiced tea experience.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Dubai Chocolate</span>
+                            <span class="item-price">$9.55</span>
+                        </div>
+                        <p class="item-desc">A customer favorite indulgent chocolate treat.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Pistachio Cheesecake</span>
+                            <span class="item-price">$10.25</span>
+                        </div>
+                        <p class="item-desc">Creamy halal cheesecake infused with premium pistachios.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Pistachio Latte</span>
+                            <span class="item-price">$8.10</span>
+                        </div>
+                        <p class="item-desc">Smooth espresso with a nutty pistachio finish.</p>
+                    </div>
                 </div>
-                <ul class="tea-list">
-                    <li>Royal Green</li>
-                    <li>Green Jasmine</li>
-                    <li>Genmaicha</li>
-                    <li>Vanilla Green</li>
-                    <li>Lemon Green</li>
-                    <li>Magic Mango</li>
-                    <li>Long Island Strawberry</li>
-                    <li>Ginger Lemon</li>
-                    <li>Genmaicha Chai</li>
-                    <li>Ginger Green</li>
-                    <li>Lucky Dragon Hyson</li>
-                    <li>Sencha Fuji</li>
-                    <li>Shanghai Lychee Jasmine</li>
-                    <li>Sencha Kyoto Cherry Rose</li>
-                    <li>Green Tea Chai</li>
-                    <li>Pan Fired Darjeeling</li>
-                    <li>Dragon-well</li>
-                </ul>
             </div>
 
-            <!-- Black Tea -->
-            <div class="tea-card">
-                <div class="card-header">
-                    <h3>Black Tea</h3>
-                    <i data-lucide="coffee" color="#8A7045"></i>
+            <div class="menu-category">
+                <h3 class="category-title">Signature Croissants</h3>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Pistachio Croissant</span>
+                            <span class="item-price">$10.50</span>
+                        </div>
+                        <p class="item-desc">Flaky pastry generously filled with pistachio cream.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Almond Croissant</span>
+                            <span class="item-price">$9.90</span>
+                        </div>
+                        <p class="item-desc">Classic flaky pastry filled with almond goodness.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Dubai Chocolate Croissant</span>
+                            <span class="item-price">$15.30</span>
+                        </div>
+                        <p class="item-desc">Premium pastry filled with rich, luxurious chocolate.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Vanilla Berries Croissant</span>
+                            <span class="item-price">$9.30</span>
+                        </div>
+                        <p class="item-desc">Sweet vanilla cream paired with fresh berries.</p>
+                    </div>
                 </div>
-                <ul class="tea-list">
-                    <li>Assam</li>
-                    <li>Black Currant</li>
-                    <li>Ceylon Orange Pekoe</li>
-                    <li>Chocolate Mint</li>
-                    <li>Cinnamon Scream</li>
-                    <li>Earl Grey Classic</li>
-                    <li>Earl Grey Cream</li>
-                    <li>Earl Grey Decaf</li>
-                    <li>Earl Grey Royal</li>
-                    <li>English Breakfast</li>
-                    <li>Himalayan Chai</li>
-                    <li>Ginger Black Tea</li>
-                    <li>Gingerbread</li>
-                    <li>Irish Breakfast</li>
-                    <li>Island Coconut</li>
-                    <li>Keemun Panda</li>
-                    <li>Lapsang Souchong</li>
-                    <li>Lychee Congou</li>
-                    <li>Mango Mist</li>
-                    <li>Margaret's Hope Darjeeling</li>
-                    <li>Monk's Blend</li>
-                    <li>Orange Spice</li>
-                    <li>Peach Apricot</li>
-                    <li>Pumpkin Spice</li>
-                    <li>Rose Tea</li>
-                    <li>Vanilla Sunday</li>
-                    <li>Young Puerh</li>
-                </ul>
             </div>
 
-            <!-- Oolong Tea -->
-            <div class="tea-card">
-                <div class="card-header">
-                    <h3>Oolong Tea</h3>
-                    <i data-lucide="wind" color="#8A7045"></i>
+            <div class="menu-category">
+                <h3 class="category-title">Cakes & Desserts</h3>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">San Sebastian Cheesecake</span>
+                            <span class="item-price">$11.10</span>
+                        </div>
+                        <p class="item-desc">Rich, creamy cheesecake with a smooth texture and caramelized top.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Lotus Cheesecake</span>
+                            <span class="item-price">$11.10</span>
+                        </div>
+                        <p class="item-desc">Smooth cheesecake infused with the distinctive flavor of Lotus Biscoff.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Tiramisu</span>
+                            <span class="item-price">$10.25</span>
+                        </div>
+                        <p class="item-desc">Coffee-soaked ladyfingers layered with creamy mascarpone.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Mango Cheesecake</span>
+                            <span class="item-price">$10.25</span>
+                        </div>
+                        <p class="item-desc">Refreshing and creamy Halal cheesecake.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Tart Mousse - Pistachio</span>
+                            <span class="item-price">$11.25</span>
+                        </div>
+                        <p class="item-desc">Rich pistachio mousse in a delicate tart shell.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Corent-Pistachio</span>
+                            <span class="item-price">$9.55</span>
+                        </div>
+                        <p class="item-desc">Pistachio covered Italian classic chocolate dripped cornet.</p>
+                    </div>
                 </div>
-                <ul class="tea-list">
-                    <li>Mango Oolong</li>
-                    <li>Creamy Oolong</li>
-                    <li>Traditional Oolong</li>
-                    <li>Royal Oolong</li>
-                </ul>
             </div>
 
-            <!-- White Tea -->
-            <div class="tea-card">
-                <div class="card-header">
-                    <h3>White Tea</h3>
-                    <i data-lucide="cloud" color="#8A7045"></i>
+            <div class="menu-category">
+                <h3 class="category-title">Coffee & Drinks</h3>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Turkish Coffee</span>
+                            <span class="item-price">$8.95</span>
+                        </div>
+                        <p class="item-desc">Traditional strong coffee.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Americano</span>
+                            <span class="item-price">$5.10</span>
+                        </div>
+                        <p class="item-desc">Rich espresso with hot water.</p>
+                    </div>
                 </div>
-                <ul class="tea-list">
-                    <li>Sowmee</li>
-                    <li>Classic White Tea</li>
-                </ul>
-            </div>
-
-            <!-- Herbal Tea -->
-            <div class="tea-card">
-                <div class="card-header">
-                    <h3>Herbal Tea</h3>
-                    <i data-lucide="flower-2" color="#8A7045"></i>
-                </div>
-                <ul class="tea-list">
-                    <li>Cozy Apple Cinnamon</li>
-                    <li>Moringa</li>
-                    <li>Body & Soul</li>
-                    <li>Green Mate</li>
-                    <li>Golden Elixir</li>
-                    <li>Sleepy Moon</li>
-                    <li>Tulsi Licorice Delight</li>
-                    <li>Peppermint</li>
-                </ul>
-            </div>
-
-            <!-- Fruit & Flower Tea -->
-            <div class="tea-card">
-                <div class="card-header">
-                    <h3>Fruit & Flower</h3>
-                    <i data-lucide="citrus" color="#8A7045"></i>
-                </div>
-                <ul class="tea-list">
-                    <li>Bingo Blueberry</li>
-                    <li>Cherry Banana</li>
-                    <li>Lime Gelato</li>
-                    <li>Strawberry Kiwi</li>
-                    <li>Sunny Mango</li>
-                    <li>Peach Harmony</li>
-                    <li>Arabian Camomile</li>
-                    <li>Passion Flower Petals</li>
-                    <li>Lavender</li>
-                    <li>Rose Petal</li>
-                </ul>
             </div>
 
         </div>
     </section>
 
-    <!-- FOOTER / LOCATION -->
-    <footer id="location" class="info-section">
-        <div class="info-col">
-            <img src="Black logo - no background.71185d48d11a3078fce8.png" alt="Ele Cafe" class="footer-logo-img">
-            <p>We are dedicated to providing the ultimate tea experience in Vancouver. From our carefully curated loose leaf selections to our cozy atmosphere, every detail is designed for your relaxation.</p>
-            <div class="social-icons">
-                <a href="#"><i data-lucide="instagram"></i></a>
-                <a href="#"><i data-lucide="facebook"></i></a>
-                <a href="#"><i data-lucide="twitter"></i></a>
+    <footer id="contact">
+        <div class="container">
+            <h2>Pistachio Sweetery Cafe</h2>
+            <p>686 Seymour St, Vancouver, BC V6B 3K4</p>
+            <div class="footer-links">
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="https://www.ubereats.com/ca/store/pistachio-sweetery-cafe/JGWO1PIIVzK6tvjq0TwzpQ">Uber Eats</a>
             </div>
-        </div>
-
-        <div class="info-col">
-            <h3>Contact Us</h3>
-            <p><strong>Address:</strong><br>
-            895 West Broadway<br>
-            Vancouver, BC V5Z 5T2</p>
-            <p><a href="mailto:info@elecafe.ca"><i data-lucide="mail" size="14" style="display:inline; margin-right: 5px;"></i> info@elecafe.ca</a></p>
-            <p><a href="tel:+16045669998"><i data-lucide="phone" size="14" style="display:inline; margin-right: 5px;"></i> +1 (604) 566-9998</a></p>
-        </div>
-
-        <div class="info-col">
-            <h3>Opening Hours</h3>
-            <ul>
-                <li><span>Mon - Sat</span> <span>09:00 AM - 09:30 PM</span></li>
-                <li><span>Sunday</span> <span>12:00 PM - 09:00 PM</span></li>
-            </ul>
+            <p style="margin-top:20px; font-size: 0.8rem;">&copy; 2025 Pistachio Sweetery Cafe. All rights reserved.</p>
         </div>
     </footer>
 
-    <div class="footer-bottom">
-        &copy; 2025 Ele Cafe. All rights reserved.
-    </div>
-
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-    </script>
 </body>
 </html>
