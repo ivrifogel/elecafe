@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melriches Coffeehouse | Davie Village</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config to match the React Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 300: '#d6d3d1',
+                            400: '#a8a29e', 500: '#78716c', 600: '#57534e', 700: '#44403c',
+                            800: '#292524', 900: '#1c1917', 950: '#0c0a09'
+                        },
+                        amber: {
+                            50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d',
+                            400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f', 950: '#451a03'
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles for Animations -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 20px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* Hide sections not currently active */
+        .section-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-stone-900 bg-stone-50 min-h-screen flex flex-col selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- Navigation -->
+    <nav class="bg-stone-900 text-stone-50 fixed w-full z-50 shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Area -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="switchTab('home')">
+                    <div class="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center mr-3 shadow-md border-2 border-amber-600/20 group-hover:bg-amber-600 transition-colors">
+                        <i data-lucide="coffee" class="text-amber-100 w-5 h-5"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-lg font-bold tracking-widest font-serif leading-none text-amber-50">MELRICHES</h1>
+                        <span class="text-[10px] font-medium tracking-[0.2em] text-amber-500 font-serif uppercase">Coffeehouse</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-link text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 py-2 border-b-2 text-amber-500 border-amber-500">Home</button>
+                    <button onclick="switchTab('menu')" id="nav-menu" class="nav-link text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 py-2 border-b-2 text-stone-400 border-transparent hover:text-white hover:border-stone-600">Menu</button>
+                    <button onclick="switchTab('story')" id="nav-story" class="nav-link text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 py-2 border-b-2 text-stone-400 border-transparent hover:text-white hover:border-stone-600">Our Story</button>
+                    <button onclick="switchTab('contact')" id="nav-contact" class="nav-link text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 py-2 border-b-2 text-stone-400 border-transparent hover:text-white hover:border-stone-600">Contact</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-stone-300 hover:text-amber-500 focus:outline-none transition-colors">
+                        <i data-lucide="menu" id="mobile-menu-icon" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden bg-stone-900 border-t border-stone-800 absolute w-full shadow-xl">
+            <div class="px-4 pt-4 pb-6 space-y-2">
+                <button onclick="switchTab('home'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-4 py-3 rounded text-sm font-bold uppercase tracking-widest bg-stone-800 text-amber-500">Home</button>
+                <button onclick="switchTab('menu'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-4 py-3 rounded text-sm font-bold uppercase tracking-widest text-stone-400 hover:bg-stone-800 hover:text-white">Menu</button>
+                <button onclick="switchTab('story'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-4 py-3 rounded text-sm font-bold uppercase tracking-widest text-stone-400 hover:bg-stone-800 hover:text-white">Our Story</button>
+                <button onclick="switchTab('contact'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-4 py-3 rounded text-sm font-bold uppercase tracking-widest text-stone-400 hover:bg-stone-800 hover:text-white">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+        
+        <!-- HOME SECTION -->
+        <div id="home-section" class="fade-wrapper">
+            <!-- Hero -->
+            <div class="relative bg-stone-900 h-[80vh] min-h-[500px] flex items-center justify-center text-center px-4 overflow-hidden">
+                <!-- Background Image Overlay -->
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute inset-0 bg-black/60 z-10"></div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+                        alt="Melriches Coffeehouse Atmosphere" 
+                        class="w-full h-full object-cover animate-fade-in-up scale-105 transition-transform duration-[30s] ease-linear hover:scale-110"
+                    />
+                </div>
+                
+                <div class="relative z-20 max-w-4xl mx-auto opacity-0 animate-fade-in-up delay-100">
+                    <h2 class="text-amber-400 text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-4">
+                        Davie Village • Est. 1997
+                    </h2>
+                    <h1 class="text-4xl md:text-7xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-2xl">
+                        Make That Happy <br/> <span class="text-amber-500">Connection</span>
+                    </h1>
+                    <p class="text-stone-200 text-base md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                        An independent coffeehouse where neighbors become friends. No corporate mandates, just good coffee and real community.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="switchTab('menu')" class="px-8 py-3 bg-amber-700 text-white text-xs font-bold uppercase tracking-widest hover:bg-amber-600 transition-all shadow-lg rounded-sm">
+                            Our Menu
+                        </button>
+                        <button onclick="switchTab('contact')" class="px-8 py-3 bg-transparent border border-stone-300 text-stone-100 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-stone-900 hover:border-white transition-all rounded-sm">
+                            Find Us
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <section class="py-16 bg-white border-b border-stone-100">
+                <div class="max-w-6xl mx-auto px-6">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        
+                        <div class="group opacity-0 animate-fade-in-up delay-100">
+                            <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm uppercase tracking-wide mb-2">Community Focused</h3>
+                            <p class="text-xs text-stone-500 leading-relaxed max-w-[150px] mx-auto">
+                                A hub for locals to meet and connect.
+                            </p>
+                        </div>
+
+                        <div class="group opacity-0 animate-fade-in-up delay-200">
+                            <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300">
+                                <i data-lucide="heart" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm uppercase tracking-wide mb-2">Independent Spirit</h3>
+                            <p class="text-xs text-stone-500 leading-relaxed max-w-[150px] mx-auto">
+                                Decisions made here, not in a boardroom.
+                            </p>
+                        </div>
+
+                        <div class="group opacity-0 animate-fade-in-up delay-300">
+                            <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300">
+                                <i data-lucide="utensils" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm uppercase tracking-wide mb-2">House Baking</h3>
+                            <p class="text-xs text-stone-500 leading-relaxed max-w-[150px] mx-auto">
+                                Cookies, soups & sandwiches made daily.
+                            </p>
+                        </div>
+
+                        <div class="group opacity-0 animate-fade-in-up delay-300">
+                            <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white transition-all duration-300">
+                                <i data-lucide="wifi" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-bold text-stone-900 text-sm uppercase tracking-wide mb-2">Laptop Friendly</h3>
+                            <p class="text-xs text-stone-500 leading-relaxed max-w-[150px] mx-auto">
+                                Free WiFi and plenty of power outlets.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <div class="bg-amber-50 py-16 text-center px-6 opacity-0 animate-fade-in-up">
+                <div class="max-w-2xl mx-auto">
+                    <h3 class="text-2xl font-bold font-serif text-stone-900 mb-3">Community Coffee Table</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6">
+                        Every week we host community tables where neighbors chat over coffee. 
+                        Perfect for breaking the ice or just enjoying good company.
+                    </p>
+                    <button onclick="switchTab('contact')" class="text-amber-700 text-xs font-bold uppercase tracking-widest border-b border-amber-700 hover:text-amber-900 hover:border-amber-900 transition-colors pb-1">
+                        Join Us
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU SECTION -->
+        <div id="menu-section" class="fade-wrapper section-hidden pt-28 pb-16 bg-stone-50 min-h-screen">
+            <div class="max-w-4xl mx-auto px-4 opacity-0 animate-fade-in-up">
+                <div class="text-center mb-12">
+                    <h2 class="text-amber-700 font-bold tracking-widest uppercase text-xs mb-2">Fresh & Local</h2>
+                    <h1 class="text-3xl md:text-4xl font-serif font-bold text-stone-900">Current Menu</h1>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Espresso -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+                        <h3 class="text-xl font-serif font-bold text-stone-800 mb-4 pb-2 border-b border-stone-100 flex items-center text-amber-700">
+                            Espresso
+                        </h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">House Latte</h4>
+                                    <span class="text-stone-900 font-serif font-medium">5.50</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Rich espresso, velvety milk</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Cappuccino</h4>
+                                    <span class="text-stone-900 font-serif font-medium">5.25</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Equal parts espresso, milk, foam</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Americano</h4>
+                                    <span class="text-stone-900 font-serif font-medium">4.50</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Espresso, hot water</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Mocha</h4>
+                                    <span class="text-stone-900 font-serif font-medium">6.00</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Espresso, chocolate, milk</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Bakery -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-100">
+                        <h3 class="text-xl font-serif font-bold text-stone-800 mb-4 pb-2 border-b border-stone-100 flex items-center text-amber-700">
+                            Bakery
+                        </h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Ginger Molasses Cookie</h4>
+                                    <span class="text-stone-900 font-serif font-medium">3.50</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Chewy, spicy house favorite</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Daily Muffin</h4>
+                                    <span class="text-stone-900 font-serif font-medium">4.00</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Blueberry, Bran, or Morning Glory</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Butter Croissant</h4>
+                                    <span class="text-stone-900 font-serif font-medium">4.25</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Baked fresh daily</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">GF Brownie</h4>
+                                    <span class="text-stone-900 font-serif font-medium">4.50</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Flourless chocolate fudge</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lunch -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-100 md:col-span-2 md:w-2/3 md:mx-auto">
+                        <h3 class="text-xl font-serif font-bold text-stone-800 mb-4 pb-2 border-b border-stone-100 flex items-center text-amber-700">
+                            Lunch
+                        </h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Tuna Melt</h4>
+                                    <span class="text-stone-900 font-serif font-medium">12.50</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Cheddar, sourdough, grilled</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Turkey Pesto</h4>
+                                    <span class="text-stone-900 font-serif font-medium">13.00</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Roasted turkey, provolone</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Avocado Toast</h4>
+                                    <span class="text-stone-900 font-serif font-medium">10.50</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Chili flakes, lemon, multigrain</p>
+                            </li>
+                            <li>
+                                <div class="flex justify-between items-baseline w-full border-b border-stone-100 pb-1 mb-1 border-dotted">
+                                    <h4 class="text-sm font-bold text-stone-700 uppercase tracking-wide">Daily Soup</h4>
+                                    <span class="text-stone-900 font-serif font-medium">8.00</span>
+                                </div>
+                                <p class="text-xs text-stone-500 italic">Scratch made. Ask for feature.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <p class="text-xs text-stone-400 uppercase tracking-widest">Menu items subject to seasonal availability</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORY SECTION -->
+        <div id="story-section" class="fade-wrapper section-hidden pt-28 pb-16 bg-white min-h-screen">
+            <div class="max-w-4xl mx-auto px-6 opacity-0 animate-fade-in-up">
+                <div class="flex flex-col md:flex-row gap-10 items-start">
+                    <!-- Image -->
+                    <div class="md:w-1/3">
+                        <img 
+                            src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                            alt="Cafe Interior" 
+                            class="rounded shadow-md w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        />
+                    </div>
+                    
+                    <!-- Text -->
+                    <div class="md:w-2/3">
+                        <h2 class="text-amber-700 font-bold tracking-widest uppercase text-xs mb-2">Est. 1997</h2>
+                        <h1 class="text-3xl font-serif font-bold text-stone-900 mb-4">Davie Village Roots</h1>
+                        <div class="space-y-4 text-stone-600 text-sm leading-relaxed">
+                            <p>
+                                The original Melriches Coffeehouse began trading on Davie Street in 1997. While the West End has changed, our mission remains simple: <strong>build community.</strong>
+                            </p>
+                            <p>
+                                We are proudly anti-franchise. Our furniture doesn't match, our playlist is eclectic, and our decisions are made right here. We believe success isn't just about the bottom line—it's about connecting one person to another.
+                            </p>
+                            <div class="border-l-2 border-amber-500 pl-4 py-1 my-4 bg-stone-50">
+                                <p class="font-serif text-stone-800 italic text-sm">
+                                    "Shyness is nice, but shyness can stop you from saying all the things in life you'd like to."
+                                </p>
+                            </div>
+                            <p>
+                                Come in, pull up a chair by the window, and say hello. It's your cafe, after all.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT SECTION -->
+        <div id="contact-section" class="fade-wrapper section-hidden pt-28 pb-16 bg-stone-50 min-h-screen">
+            <div class="max-w-5xl mx-auto px-6 opacity-0 animate-fade-in-up">
+                <div class="grid md:grid-cols-2 gap-8">
+                    
+                    <!-- Info Column -->
+                    <div class="space-y-6">
+                        <div>
+                            <h1 class="text-3xl font-serif font-bold text-stone-900 mb-6">Visit Us</h1>
+                            
+                            <div class="bg-white p-6 rounded shadow-sm border border-stone-100 space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-amber-600 mt-1 flex-shrink-0"></i>
+                                    <div>
+                                        <h3 class="font-bold text-stone-800 text-sm uppercase mb-1">Location</h3>
+                                        <p class="text-stone-600 text-sm">1244 Davie Street<br/>Vancouver, BC V6E 1N4</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <i data-lucide="clock" class="w-5 h-5 text-amber-600 mt-1 flex-shrink-0"></i>
+                                    <div class="w-full">
+                                        <h3 class="font-bold text-stone-800 text-sm uppercase mb-1">Hours</h3>
+                                        <div class="text-stone-600 text-sm flex justify-between w-full max-w-[200px]">
+                                            <span>Mon-Fri</span> <span>6:30am – 6:30pm</span>
+                                        </div>
+                                        <div class="text-stone-600 text-sm flex justify-between w-full max-w-[200px]">
+                                            <span>Sat-Sun</span> <span>7:00am – 6:30pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <i data-lucide="phone" class="w-5 h-5 text-amber-600 mt-1 flex-shrink-0"></i>
+                                    <div>
+                                        <h3 class="font-bold text-stone-800 text-sm uppercase mb-1">Contact</h3>
+                                        <p class="text-stone-600 text-sm"><a href="tel:+16046895282" class="hover:text-amber-600">+1 604 689 5282</a></p>
+                                        <p class="text-stone-600 text-sm"><a href="mailto:info@melriches.com" class="hover:text-amber-600">info@melriches.com</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Socials -->
+                        <div class="flex gap-4">
+                            <a href="https://twitter.com/melriches" target="_blank" rel="noreferrer" class="flex items-center justify-center w-10 h-10 bg-white border border-stone-200 rounded-full hover:bg-amber-50 hover:border-amber-200 hover:text-amber-600 transition-all">
+                                <i data-lucide="twitter" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://www.facebook.com/pages/Melriches-Coffeehouse/137110499634957" target="_blank" rel="noreferrer" class="flex items-center justify-center w-10 h-10 bg-white border border-stone-200 rounded-full hover:bg-amber-50 hover:border-amber-200 hover:text-amber-600 transition-all">
+                                <i data-lucide="facebook" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="flex items-center justify-center w-10 h-10 bg-white border border-stone-200 rounded-full hover:bg-amber-50 hover:border-amber-200 hover:text-amber-600 transition-all">
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Map Embed -->
+                    <div class="h-64 md:h-auto bg-stone-200 rounded overflow-hidden border border-stone-300 shadow-sm relative min-h-[300px]">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=1244+Davie+St,+Vancouver,+BC&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; position: absolute; top:0; left:0; width:100%; height:100%;" 
+                            allowFullScreen="" 
+                            loading="lazy" 
+                            title="Melriches Coffeehouse Location"
+                            class="grayscale hover:grayscale-0 transition-all duration-500"
+                        ></iframe>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-500 py-12 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <h2 class="text-sm font-bold text-stone-300 font-serif tracking-wider uppercase">Melriches Coffeehouse</h2>
+                <p class="text-xs mt-2 opacity-50">© <script>document.write(new Date().getFullYear())</script> All rights reserved.</p>
+            </div>
+            
+            <div class="flex gap-6 text-center">
+                <button onclick="switchTab('home')" class="hover:text-amber-500 transition-colors text-xs uppercase tracking-widest">Home</button>
+                <button onclick="switchTab('menu')" class="hover:text-amber-500 transition-colors text-xs uppercase tracking-widest">Menu</button>
+                <button onclick="switchTab('story')" class="hover:text-amber-500 transition-colors text-xs uppercase tracking-widest">Story</button>
+                <button onclick="switchTab('contact')" class="hover:text-amber-500 transition-colors text-xs uppercase tracking-widest">Contact</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for Interaction -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Tab Switch Logic
+        function switchTab(tabId) {
+            // 1. Hide all sections
+            const sections = ['home-section', 'menu-section', 'story-section', 'contact-section'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.add('section-hidden');
+                
+                // Reset animation: Remove the class so we can add it back
+                const innerWrapper = el.querySelector('.opacity-0'); // This targets the inner div with the animation class
+                if(innerWrapper) {
+                    innerWrapper.classList.remove('animate-fade-in-up');
+                    void innerWrapper.offsetWidth; // Trigger reflow to restart animation
+                }
+            });
+
+            // 2. Show target section
+            const targetSection = document.getElementById(tabId + '-section');
+            targetSection.classList.remove('section-hidden');
+            
+            // Re-add animation class to trigger fade-in
+            const innerWrapper = targetSection.querySelector('.opacity-0'); 
+            if(innerWrapper) {
+                innerWrapper.classList.add('animate-fade-in-up');
+            }
+
+            // 3. Update Nav States
+            const navIds = ['home', 'menu', 'story', 'contact'];
+            navIds.forEach(id => {
+                // Desktop
+                const btn = document.getElementById('nav-' + id);
+                if (id === tabId) {
+                    btn.classList.remove('text-stone-400', 'border-transparent', 'hover:text-white', 'hover:border-stone-600');
+                    btn.classList.add('text-amber-500', 'border-amber-500');
+                } else {
+                    btn.classList.add('text-stone-400', 'border-transparent', 'hover:text-white', 'hover:border-stone-600');
+                    btn.classList.remove('text-amber-500', 'border-amber-500');
+                }
+            });
+
+            // 4. Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Logic
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'x');
+            } else {
+                menu.classList.add('hidden');
+                icon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons(); // Re-render icon change
+        }
+    </script>
+</body>
+</html>
